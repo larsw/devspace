@@ -33,6 +33,7 @@ tags
 # Created by running unit tests ./hack/coverage.bash
 coverage.txt
 ./main
+main
 profile.out
 
 

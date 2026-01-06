@@ -63,11 +63,12 @@ type InitCmd struct {
 	*flags.GlobalFlags
 
 	// Flags
-	Reconfigure bool
-	Dockerfile  string
-	Context     string
-	Provider    string
-	log         log.Logger
+	Reconfigure     bool
+	Dockerfile      string
+	Context         string
+	Provider        string
+	TemplateRepoURL string
+	log             log.Logger
 }
 
 // NewInitCmd creates a new init command
@@ -99,6 +100,7 @@ folder. Creates a devspace.yaml as a starting point.
 	initCmd.Flags().StringVar(&cmd.Context, "context", "", "Context path to use for intialization")
 	initCmd.Flags().StringVar(&cmd.Dockerfile, "dockerfile", helper.DefaultDockerfilePath, "Dockerfile to use for initialization")
 	initCmd.Flags().StringVar(&cmd.Provider, "provider", "", "The cloud provider to use")
+	initCmd.Flags().StringVar(&cmd.TemplateRepoURL, "template-repo-url", "", "Git URL of a template repository (e.g. https://github.com/user/repo.git)")
 
 	return initCmd
 }
@@ -175,7 +177,7 @@ func (cmd *InitCmd) Run(f factory.Factory) error {
 
 func (cmd *InitCmd) initDevspace(f factory.Factory, configLoader loader.ConfigLoader) error {
 	// Create new dockerfile generator
-	languageHandler, err := generator.NewLanguageHandler("", "", cmd.log)
+	languageHandler, err := generator.NewLanguageHandler("", cmd.TemplateRepoURL, cmd.log)
 	if err != nil {
 		return err
 	}
