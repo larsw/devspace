@@ -121,14 +121,14 @@ spec:
 
 func TestInitCmdTemplateRepoURLFlag(t *testing.T) {
 	f := factory.DefaultFactory()
-	
+
 	// Create the command
 	initCmd := NewInitCmd(f)
-	
+
 	// Verify the flag exists
 	flag := initCmd.Flags().Lookup("template-repo-url")
 	assert.Assert(t, flag != nil, "template-repo-url flag should exist")
-	
+
 	// Verify flag properties
 	assert.Equal(t, flag.Name, "template-repo-url", "flag name should be template-repo-url")
 	assert.Equal(t, flag.DefValue, "", "default value should be empty string")
